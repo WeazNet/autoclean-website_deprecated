@@ -131,11 +131,11 @@ class Leboncoin
             exit;
         }
         foreach ($ads as $ad) {
-            $this->em->remove($ad);
             if($category !== 'articles'){
             $ad->removeViewers($ad->getViewerId());
             $this->em->persist($ad);
             }
+            $this->em->remove($ad);
             $adsRemoved++;
         }
         $this->em->flush();

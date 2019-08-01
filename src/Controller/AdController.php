@@ -13,6 +13,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\AdSearch;
 use App\Form\AdSearchType;
+use App\Repository\ViewerRepository;
+use App\Entity\Viewer;
 
 class AdController extends AbstractController 
 {
@@ -81,8 +83,30 @@ class AdController extends AbstractController
      * @param  mixed $slug
      * @return Response
      */
-    public function show(Ad $ad, string $slug): Response
+    public function show(Ad $ad, string $slug, ViewerRepository $repository): Response
     {
+        // add Viewer //
+        $checked = false;
+        $current_ip = $_SERVER['REMOTE_ADDR'];
+
+        $viewers = $repository->findAll();
+        foreach ($viewers as $viewer) {
+            if($current_ip == $viewer->getIp())
+            {
+                $checked = true;
+            }
+        }
+        
+        if(!$checked){
+            $viewer = new Viewer();
+            $viewer->setIp($current_ip);
+        } else {
+            $viewer = $repository->findOneBy(['ip' => $current_ip]);
+        }
+            $ad->addViewerId($viewer);
+            $this->em->persist($ad);
+            $this->em->flush();
+
         $adSlug = $ad->getSlug();
         if($adSlug !== $slug) {
             return $this->redirectToRoute('ad.show', [

@@ -28,9 +28,10 @@ security:
     access_control:
         - { path: ^/nos-annonces/load, roles: ROLE_ADMIN }
         - { path: ^/nos-articles/load, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
     encoders:
         App\Entity\User:
-            algorithm: bcrypt
+            algorithm: auto
             cost: 12
 

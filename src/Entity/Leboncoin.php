@@ -6,6 +6,8 @@ use Absmoca\Leboncoin as Lbc;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Repository\AdRepository;
 use App\Repository\ArticleRepository;
+use App\Repository\ViewerRepository;
+use Symfony\Component\DependencyInjection\LazyProxy\PhpDumper\NullDumper;
 
 class Leboncoin
 {
@@ -67,7 +69,7 @@ class Leboncoin
         return [$adsUpdated, $adsRemoved];
     }
 
-    public function getArticles(ArticleRepository $repository, int $articlesUpdated = 0): array
+    public function getArticles(ArticleRepository $repository, ViewerRepository $viewerRepository, int $articlesUpdated = 0): array
     {
         $articles = $this->getParams(31);
         $articlesJob = $this->getParams(71);
@@ -130,6 +132,8 @@ class Leboncoin
         }
         foreach ($ads as $ad) {
             $this->em->remove($ad);
+            $ad->removeViewers($ad->getViewerId());
+            $this->em->persist($ad);
             $adsRemoved++;
         }
         $this->em->flush();

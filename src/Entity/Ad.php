@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -91,12 +93,18 @@ class Ad
      */
     private $prime_conversion;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Viewer", cascade={"persist"})
+     */
+    private $viewer_id = null;
+
     public function __construct()
     {
         $date = new \DateTime();
         $now = $date->getTimestamp();
 
         $this->created_at = $now;
+        $this->viewer_id = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -309,5 +317,42 @@ class Ad
         $this->prime_conversion = $prime_conversion;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Viewer[]|null
+     */
+    public function getViewerId(): ?Collection
+    {
+        return $this->viewer_id;
+    }
+
+    public function addViewerId(Viewer $viewerId): self
+    {
+        if (!$this->viewer_id->contains($viewerId)) {
+            $this->viewer_id[] = $viewerId;
+        }
+
+        return $this;
+    }
+
+    public function removeViewerId(Viewer $viewerId): self
+    {
+        if ($this->viewer_id->contains($viewerId)) {
+            $this->viewer_id->removeElement($viewerId);
+        }
+
+        return $this;
+    }
+    public function removeViewers($viewers): self
+    {
+        foreach($viewers as $viewer) {
+            $this->removeViewerId($viewer);
+        }
+        return $this;
+    }
+    public function getNumberViews()
+    {
+        return $this->viewer_id->count();
     }
 }

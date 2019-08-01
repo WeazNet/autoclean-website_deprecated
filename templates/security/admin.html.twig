@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block name 'Admin' %}
+{% block title 'Admin - Garage Autoclean' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin/main.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+    <div class="wrapper">
+        <div class="views-title">
+            <i class="admin-icon"></i><p> Nombre de vues des annonces</p>
+        </div>
+        <table class="views-panel">
+            <tr>
+                <td>Image</td>
+                <td>Nom</td>
+                <td>Vues</td>
+            </tr> 
+            {% for ad in ads %}
+                <tr>
+                    <td><img src="{{ ad.unserializedImages.0 }}" alt="{{ ad.name }}"></td>
+                    <td>{{ ad.name }}</td>
+                    <td>{{ ad.numberViews }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

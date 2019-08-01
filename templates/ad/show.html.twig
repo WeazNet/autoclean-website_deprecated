@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block name %}{{ ad.brand }}{% if ad.model != 'Non renseignée' and ad.model != 'Autres' %} {{ ad.model }}{% endif %} ({{ ad.id }}){% endblock %}
+{% block title %}{{ ad.brand }}{% if ad.model != 'Non renseignée' and ad.model != 'Autres' %} {{ ad.model }}{% endif %} ({{ ad.id }}) - Garage Autoclean{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/ad/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/ad/lightbox.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/ad/lightslider.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+    <div class="wrapper">
+        <nav class="nav-specific">
+            <a href="{{ path('ad.index') }}">Annonces</a>&rsaquo;<span>{{ ad.brand }}{% if ad.model != 'Non renseignée' and ad.model != 'Autres' %} {{ ad.model }}{% endif %}</span>
+        </nav>
+    <section class="view-ad">
+        <div class="view-image">
+            <figure>
+                <div class="item">            
+                    <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+                        {% for image in ad.unserializedImages %}
+                            <li data-thumb="{{ image }}"> 
+                                <a href="{{ image }}" data-lightbox="show"><img src="{{ asset('images/load-big.gif') }}" data-src="{{ image }}" alt="{{ ad.brand }} {{ ad.model }} autoclean" /></a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </figure>
+        </div>    
+        <div class="view-content">
+            <div class="view-title">
+                <h2>{{ ad.name }}</h2>
+            </div>
+            <div class="view-infos">
+                <div class="view-price">
+                    <h3>{{ ad.formattedPrice }} €</h3>
+                </div>
+                <div class="view-button">
+                    <a href="{{ path('contact.index') }}">Nous contacter</a>
+                </div>
+            </div>
+        </div>
+    </section>
+        <section class="about-ad">
+            <div class="about-head" id="sticky">
+                <h2 class="about-title">à propos</h2>
+                <div class="about-control mobile-display">
+                    <a class="onglet-btn active" id="specificities-btn" href="#specificities">Spécificités</a><a class="onglet-btn" id="description-btn" href="#description">Description</a>
+                </div>
+            </div>
+            <div class="specificities-ad">
+                <h4>Spécifictés</h4>
+                <div class="table-specificities">
+                    <table>
+                        <tr>
+                            <td class="specificity">Marque</td>
+                            <td class="specificity-value">{{ ad.brand }}</td>
+                        </tr>
+                        <tr>
+                            <td class="specificity">kilométrage</td>
+                            <td class="specificity-value">{{ ad.formattedMileage }} km</td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td class="specificity">Modèle</td>
+                            <td class="specificity-value">{{ ad.model }}</td>
+                        </tr>
+                        <tr>
+                            <td class="specificity">Carburant</td>
+                            <td class="specificity-value">{{ ad.fuel }}</td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td class="specificity">Année-modèle</td>
+                            <td class="specificity-value">{{ ad.year }}</td>
+                        </tr>
+                        <tr>
+                            <td class="specificity">Boîte de vitesse</td>
+                            <td class="specificity-value">{{ ad.gearbox }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="description-ad">
+                <h4>Description</h4>
+                <div class="description-content">
+                    <p>
+                        {{ ad.description | nl2br }}
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+    {% include 'footer.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+        <script src="{{ asset('js/ad/lightbox-plus-jquery.min.js') }}"></script>
+        <script src="{{ asset('js/ad/lightbox.min.js') }}"></script>
+        <script src="{{ asset('js/ad/lightslider.min.js') }}"></script>
+        <script src="{{ asset('js/ad/main.js') }}"></script>
+{% endblock %}

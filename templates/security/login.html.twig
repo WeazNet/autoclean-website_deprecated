@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block name 'Admin' %}
+{% block title 'Admin - Garage Autoclean' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/login/main.css')}}">
+{% endblock %}
+{% block body %}
+    {% include 'header.html.twig' %}
+    <div class="wrapper">
+        <section class="connexion-box">
+        {% if error %}
+            <div class="error-box">
+                <span>Impossible de se connecter !</span>
+            </div>
+        {% endif %}
+            <div class="connexion-title">
+                <h2>Connexion Admin</h2>
+            </div>
+            <div class="connexion-content">
+                <form action="{{ path('login') }}" method="post">
+                    <input type="text" id="username" name="_username" placeholder="Entrez votre pseudonyme" value="{{ last_username }}">
+                    <input type="password" id="password" name="_password" placeholder="Entrez votre mot de passe">
+                    <button type="submit">Se connecter</button>
+                </form>
+            </div>
+        </section>
+    </div>
+{% endblock %}

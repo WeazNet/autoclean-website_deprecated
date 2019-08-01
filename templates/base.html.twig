@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="author" content="Weaz" />
+        <meta name="title" content="{% block name %}{% endblock %}" />
+        <meta name="description" content="Le garage automobile Auto Clean à Béthune est spécialisé dans le domaine du lavage automobile dans la région Nord Pas-de-Calais. Nous réalisons lavages, vidanges, révisions, montages des pneus, et toutes les réparations mécaniques. Faites appel à nous aussi pour la vente automobile ! Une liste complète de toutes marques est présente à votre disposition. Aussi, nous vous proposons la reprise de voiture d'occasion en un rien de temps quelle que soit sa marque et son âge." />
+        <meta name="keywords" content="garage auto clean, lavage auto clean, lavage à Béthune, lavage véhicule, vente automobiles, vente auto à Béthune, mécanique à Béthune, vente auto dans le Nord pas de Calais, autoclean, garage autoclean,">
+        <link rel="shortcut icon" href="{{ asset('images/icon.ico') }}" />
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap" rel="stylesheet">
+        <title>{% block title %}Garage Autoclean{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+        <script src="{{ asset('js/main.js') }}"></script>
+    </body>
+</html>

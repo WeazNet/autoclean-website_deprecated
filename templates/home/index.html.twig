@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+{% block name 'Accueil' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/home/main.css')}}">
+{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+        <section class="hero">
+                <div class="inner container">
+                    <h1>Ventes de véhicules neufs et d'occasions de toutes marques</h1>
+                    <a href="{{ path('ad.index') }}">Voir les véhicules</a>
+                </div>
+                <a href="#" id="swipe"></a>
+                <div class="black-font"></div>
+        </section>
+
+        <div class="wrapper">
+        <section class="services container">
+
+            <h2>Nos services</h2>
+
+            <div class="services-box">
+                <div class="service">
+                    <div class="inner">
+                        <img src="{{ asset('images/wrench-icon.png') }}" alt="wrench icon">
+                        <h3>Mécanique</h3>
+                        <p>Mécanique auto toutes marques</p>
+                    </div>
+                </div>
+
+                <div class="service">
+                    <div class="inner">
+                        <img src="{{ asset('images/sold-icon.png') }}" alt="sold icon">
+                        <h3>Vente</h3>
+                        <p>Vente de voitures avec entretien à jour</p>
+                    </div>
+                </div>
+
+                <div class="service">
+                    <div class="inner">
+                        <img src="{{ asset('images/wash-icon.png') }}" alt="wash icon">
+                        <h3>Lavage</h3>
+                        <p>Nettoyage intérieur et extérieur de tout type de véhicule</p>
+                    </div>
+                </div>
+        </div>
+        </section>
+            <section class="news container">
+
+            <h2>Actualités</h2>
+            <div class="articles">
+                {% for article in articles %}
+                <article class="new">
+                    <div class="article-image">
+                    <img src="{{ article.unserializedImages.0 }}" alt="image article">
+                    </div>
+                    <h4>{{ article.name }}</h4>
+                    <p>{{ article.description|length > 60 ? article.description|slice(0, 60) ~ '...' : article.description }}</p>
+                    <a href="{{ path('article.show', {slug: article.slug, id: article.id}) }}">Lire l'article</a>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        <section class="reviews">
+
+            <h2>Avis Clients</h2>
+
+            <div class="reviewbox">
+                <div class="inner">
+                    <div class="review">
+                        <p>Je vais dans ce garage depuis des années, je n’ai jamais été déçue. Service de qualité, je recommande sans problème. Merci à vous pour votre sérieux !</p>
+                    </div>
+                    <div class="review">
+                        <p>Super travail réalisé sur mon Audi Q7 il est ressorti de la comme neuf. Une équipe de pros que je recommande sans hésitation</p>
+                    </div>
+                    <div class="review">
+                        <p>Excellent garage. J'ai acheté une 407 pour mon fils. Hier nous avons eu un petit soucis de démarrage, le patron et le mécano ont tout fait pour régler nôtre problème par téléphone dans un premier temps, et en proposant de se déplacer le lendemain dans un second temps. Le mecano nous a même rappeler de chez lui après son boulot pour nous dépanner.......le service dépasse toutes nos attentes. Chapeau.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+    <div class="black-font2"></div>
+    <footer>
+        <div class="inner">
+            <div class="logo">
+                <a href="#"><img src="{{ asset('images/logo.png') }}" alt="logo img"></a>
+            </div>
+            <div class="about">
+                <a href="#"><img src="{{ asset('images/facebook-icon.svg') }}" alt="facebook icon"></a>
+                <a href="#"><img src="{{ asset('images/leboncoin-icon.svg') }}" alt="leboncoin icon"></a>
+                <p>Développé et designé avec <span>❤</span> par Weaz </p>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/home/main.js') }}"></script>
+{% endblock %}

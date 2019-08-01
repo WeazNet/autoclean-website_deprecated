@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+{% block name 'Nos annonces' %}
+{% block title 'Nos annonces - Garage Autoclean' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/ads/main.css')}}">
+{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+     <div id="menu-options-av" class="mobile-display">
+        <div class="font-cover"></div>
+        <div class="inner">
+            <div class="options-av-content">
+                {{ form_start(search_av) }}
+                    <div class="form-group global-av">
+                        <label for="global-input">Recherche</label>
+                        {{ form_widget(search_av.global) }}
+                    </div>
+                    <span class="options-av-title">Options avancées</span>
+                    {{ form_widget(search_av.brand) }}
+                    {{ form_widget(search_av.fuel) }}
+                    {{ form_widget(search_av.gearbox) }}
+                    <span class="options-av-title">Trier par...</span>
+                    {{ form_widget(search_av.sort) }}
+                    <button type="submit" class="search-options-av">Rechercher</button>
+                {{ form_end(search_av) }}
+            </div>
+        </div>
+    </div>
+    <div class="recherche-cover desktop-display"></div>
+    <div class="site-content">
+        <a class="link-site" href="https://www.leboncoin.fr/boutique/37283/garage_auto_clean.htm" rel="external"></a>
+        <div class="wrapper">
+            <section class="recherche">
+                <header class="header-list">
+                    <div class="inner">
+                        <div class="list-infos">
+                            <div class="list-infos-title">
+                                <img src="{{ asset('/images/car-title.png') }}" alt="font car">
+                                <h1>Liste de<br/> nos véhicules</h1>
+                            </div>
+                            <div class="infos-cars">
+                                <div class="inner">
+                                    <div data-count="{{ total_ads }}" class="cars-available">
+                                        Véhicules disponibles
+                                    </div>
+                                    <div data-count="dev" class="cars-reserved">
+                                        Véhicules réservés
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <div class="properties-list">
+                    <div class="inner">
+                            <div class="principal-properties">
+                            {% if app.user %}                   
+                            <div class="admin-title">
+                                <i class="user-shape-icon"></i><h4> Espace Admin</h4><a href="{{ path('logout') }}">Déconnexion</a>
+                            </div>
+                            <div class="admin-control">
+                                {% for number in app.flashes('updated') %}
+                                    <span class="ads-updated">{{ number }} annonce{% if number > 1 %}s{% endif %} mise{% if number > 1 %}s{% endif %} à jour</span>
+                                {% endfor %}
+                                {% for number in app.flashes('removed') %}
+                                    <span class="ads-removed">{{ number }} annonce{% if number > 1 %}s{% endif %} supprimée{% if number > 1 %}s{% endif %}</span>
+                                {% endfor %}
+                                <a class="reload-btn" href="{{ path('ad.load') }}">reload  <i class="load-icon"></i></a>
+                            </div>
+                            {% endif %}
+                                    {{ form_start(search) }}
+                                    <div class="form-group">
+                                        <label for="global-input">Recherche</label>
+                                        {{ form_widget(search.global) }}
+                                        <button class="search-btn" type="submit">Rechercher</button>
+                                    </div>
+                                    <div class="form-group desktop-display">
+                                            {{ form_widget(search.brand) }}
+                                            {{ form_widget(search.fuel) }}
+                                            {{ form_widget(search.gearbox) }}
+                                    </div>
+                            </div>
+                            <div class="secondary-properties">
+                                    {{ form_widget(search.sort) }}
+                                <a id="options-av" class="mobile-display" href="#options">Options avancées</a>
+                            </div>
+                        {{ form_end(search) }}
+                    </div>
+                </div>
+            </section>
+            <main class="ads-list">
+                <div class="inner">
+                    {% if ads.totalItemCount != total_ads %}
+                        <div class="search-infos">
+                            <span>Recherche effectuée</span>
+                            <span class="search-result">{{ ads.totalItemCount }} annonce{% if ads.totalItemCount > 1 %}s{% endif %} trouvée{% if ads.totalItemCount > 1 %}s{% endif %}</span>
+                        </div>
+                    {% endif %}
+                    {% for ad in ads %}
+                        {% include 'ad/_ad.html.twig' %}
+                    {% endfor %}
+                    <nav class="nav-ads">
+                        {{ knp_pagination_render(ads) }}
+                    </nav>
+                </div>
+            </main>
+            <aside>
+                <div class="brands-list desktop-display">
+                    <header class="header-aside">
+                        Liste des marques disponibles
+                    </header>
+                    <div class="inner">
+                    {% for key, value in brands %}
+                        {% if key != "Non renseignée" %}
+                            <a href="{{ path('ad.index', {brand: key}) }}" class="brand">
+                                <p data-count="{{ value }}">{{ key }}</p>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                </div>
+                <div class="contact desktop-display">
+                    <header class="header-aside">
+                        Prendre contact
+                    </header>
+                    <div class="inner">
+                        <a href="{{ path('contact.index') }}" class="btn-rdv">Prendre RDV</a>
+                    </div>
+                </div>
+                <div class="recent-entries">
+                    <header class="header-aside">
+                        Entrées récentes
+                    </header>
+                    <div class="inner">
+                        <div class="entries-list">
+                            {% for latest_ad in latest_ads %}
+                            <a class="ad-entry" href="{{ path('ad.show', {id: latest_ad.id, slug: latest_ad.slug}) }}">
+                                <div class="ad-entry-image">
+                                    <div class="ad-entry-price">
+                                        <p>{{ latest_ad.formattedPrice }} €</p>
+                                        <div class="line"></div>
+                                    </div>
+                                    <img src="{{ asset('images/load.gif') }}" data-src="{{ latest_ad.unserializedImages.0 }}" alt="{{ latest_ad.name }} image">
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    {% include 'footer.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/ads/main.js') }}"></script>
+{% endblock %}

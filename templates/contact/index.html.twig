@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+{% block name 'Prendre RDV' %}
+{% block title 'Contact - Garage Autoclean' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/contact/main.css')}}">
+{% endblock %}
+{% block body %}
+
+    {% include 'header.html.twig' %}
+    <section class="hero">
+        <div class="inner">
+            <div class="hero-title">
+                    <h1>Prendre Rendez-vous</h1>
+            </div>
+        </div>
+    </section>
+    <div class="site-content">
+        <div class="wrapper">
+            <section class="contact">
+                    {% for message in app.flashes('success') %}
+                        <div class="alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    {% for message in app.flashes('errors') %}
+                        <div class="alert-errors">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <div class="contact-box">
+                        <div class="infos">
+                            <div class="infos-primary">
+                                <div class="info">
+                                    <div class="info-title">
+                                        <h4>Adresse</h4>
+                                    </div>
+                                    <div class="info-description">
+                                        <p>88, RUE MARCELLIN BERTHELOT<br/>
+                                        62400 BETHUNE<br/>
+                                        Pas-de-Calais - Nord-Pas-de-Calais </p>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                        <div class="info-title">
+                                            <h4>Tel.</h4>
+                                        </div>
+                                        <div class="info-description">
+                                            <p>0361910000</p>
+                                        </div>
+                                </div>
+                                <div class="info">
+                                        <div class="info-title">
+                                            <h4>Horaires</h4>
+                                        </div>
+                                        <div class="info-description">
+                                            <p>Du Lundi au Samedi<br/> 
+                                            *9h00 à 12h00 -- 13h00 à 18h00* </p>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="location-info">
+                                <img src="{{ asset('/images/carte.jpg') }}" alt="location carte">
+                                <a rel="external nofollow" target="_blank" href="https://www.google.com/maps/place/Garage+Auto-Clean+Service+%E2%80%A2+LAVAGE+AUTO/@50.5288602,2.6437981,15z/data=!4m2!3m1!1s0x0:0xe0ce06f6b3d932?sa=X&ved=2ahUKEwi8s_fPl8PjAhWk3OAKHeDRAHwQ_BIwCnoECA8QCA">Localiser</a>
+                            </div>
+                        </div>
+                        <div class="form">
+                            {{ form_start(form) }}
+                                <div class="form-group">
+                                <label for="email">Email</label>
+                                    {{ form_widget(form.email) }}
+                                </div>
+                                <div class="form-group">
+                                <label for="tel">Tel.</label>
+                                    {{ form_widget(form.tel) }}
+                                </div>
+                                <div class="form-group">
+                                <label for="subject">Objet</label>
+                                    {{ form_widget(form.subject) }}
+                                </div>
+                                <div class="form-group">
+                                <label for="message">Message</label>
+                                    {{ form_widget(form.message) }}
+                                </div>
+                                <button type="submit">Envoyer</button>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+            </section>
+        </div>
+    </div>
+    <div class="cover"></div>
+    {% include 'footer.html.twig' %}
+{% endblock %}

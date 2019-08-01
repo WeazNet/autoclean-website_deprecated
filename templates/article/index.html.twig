@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block name 'Nos articles' %}
+{% block title 'Nos articles - Garage Autoclean' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/articles/main.css')}}">
+{% endblock %}
+{% block body %}
+    {% include 'header.html.twig' %}
+    <section class="hero">
+        <div class="inner">
+            <div class="hero-title">
+                    <h1>Nos actualités</h1>
+            </div>
+        </div>
+    </section>
+    <div class="site-content">
+        <a href="{{ path('contact.index') }}" class="link-site"></a>
+        <div class="wrapper">
+        {% if app.user %}
+            <div class="admin-title">
+                <i class="user-shape-icon"></i><h4> Espace Admin</h4><a href="{{ path('logout') }}">Déconnexion</a>
+            </div>
+            <div class="admin-control">
+                {% for number in app.flashes('updated') %}
+                    <span class="articles-updated">{{ number }} article{% if number > 1 %}s{% endif %} mis à jour</span>
+                {% endfor %}
+                {% for number in app.flashes('removed') %}
+                    <span class="articles-removed">{{ number }} article{% if number > 1 %}s{% endif %} supprimé{% if number > 1 %}s{% endif %}</span>
+                {% endfor %}
+                <a class="reload-btn" href="{{ path('article.load') }}">reload  <i class="load-icon"></i></a>
+            </div>
+        {% endif %}
+            <main class="news">
+                {% for article in articles %}
+                <article class="new">
+                    <div class="new-image">
+                        <img src="{{ asset('images/load.gif') }}" data-src="{{ article.unserializedImages.0 }}" alt="article image">
+                    </div>
+                    <div class="new-content">
+                        <h4>{{ article.name }}</h4>
+                        <span class="new-date">{{ article.date | date("d/m/Y")}}</span>
+                        <p>{{ article.description|length > 100 ? article.description|slice(0, 100) ~ '...' : article.description }}</p>
+                        <a href="{{ path('article.show', {'slug': article.slug, 'id': article.id}) }}">Lire la suite</a>
+                    </div>
+                </article>
+                {% endfor %}
+                <nav class="nav-news">
+                    {{ knp_pagination_render(articles) }}
+                </nav>
+            </main>
+            <section class="gallery">
+                <h2 class="gallery-title">Galerie photo</h2>
+                    <div class="gallery-content">
+                            <img src="{{ asset('images/load-big.gif') }}" data-src="{{ asset('images/portfolio-1.jpg') }}" alt="gallery image">
+                            <img src="{{ asset('images/load-big.gif') }}" data-src="{{ asset('images/portfolio-2.jpg') }}" alt="gallery image">
+                            <img src="{{ asset('images/load-big.gif') }}" data-src="{{ asset('images/portfolio-3.jpg') }}" alt="gallery image">
+                            <img src="{{ asset('images/load-big.gif') }}" data-src="{{ asset('images/portfolio-4.jpg') }}" alt="gallery image">
+                            <img src="{{ asset('images/load-big.gif') }}" data-src="{{ asset('images/portfolio-5.jpg') }}" alt="gallery image">
+                            <img src="{{ asset('images/load-big.gif') }}" data-src="{{ asset('images/portfolio-6.jpg') }}" alt="gallery image">
+                            <img src="{{ asset('images/load-big.gif') }}" data-src="{{ asset('images/portfolio-7.jpg') }}" alt="gallery image">
+                            <img src="{{ asset('images/load-big.gif') }}" data-src="{{ asset('images/portfolio-8.jpg') }}" alt="gallery image">
+                            <img src="{{ asset('images/load-big.gif') }}" data-src="{{ asset('images/portfolio-9.jpg') }}" alt="gallery image">
+                    </div>
+            </section>
+        </div>
+    </div>
+    {% include 'footer.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/articles/main.js') }}"></script>
+{% endblock %}

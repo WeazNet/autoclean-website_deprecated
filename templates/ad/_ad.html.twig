@@ -1,0 +1,16 @@
+<a href="{{ path('ad.show', {id: ad.id, slug: ad.slug}) }}" class="ad">
+    {% if ad.primeConversion %}<div class="conversion-ticket"></div>{% endif %}
+    <div class="ad-image">
+        <img src="{{ asset('images/load.gif') }}" data-src="{{ ad.unserializedImages.0 }}" alt="{{ ad.name }} image">
+    </div>
+    <div class="ad-content">
+        <header class="ad-title">
+            <h4>{{ ad.name }}</h4>
+        </header>
+        <div class="ad-infos">
+            <p class="ad-brand">{{ ad.brand }}</p>
+            <p class="ad-model">{{ ad.model }}</p>
+            <p class="ad-price">{{ ad.formattedPrice }} €</p>
+        </div>
+    </div>
+</a>

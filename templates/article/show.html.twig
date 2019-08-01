@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block name %}{{ article.name }}{% endblock %}
+{% block title %}{{ article.name }} - Garage Autoclean{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/article/main.css')}}">
+{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+    <div class="wrapper">
+        <nav class="nav-specific">
+                <a href="{{ path('article.index') }}">Articles</a>&rsaquo;<span>Prestation auto geometrie vidange distribution</span>
+        </nav>
+
+        <div class="article-image">
+            <img src="{{ asset('/images/load-big.gif') }}" data-src="{{ article.unserializedImages.0 }}" alt="image article">
+        </div>
+        <div class="article-title">
+            <div class="rectangle-title"></div>
+            <h1>{{ article.name }}</h1>
+            <span class="article-date">Article publié le {{ article.date | date("d/m/Y") }}</span>
+        </div>
+        <div class="article-content">
+            <p>
+                {{ article.description|nl2br }}
+            </p>
+        </div>
+    </div>
+    {% include 'footer.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/article/main.js') }}"></script>
+{% endblock %}

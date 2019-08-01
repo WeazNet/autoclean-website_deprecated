@@ -1,0 +1,22 @@
+<header id="header" class="header-page">
+        <a href="{{ path('home.index') }}"><img class="logo" src="{{ asset('images/logo.png') }}" alt="logo"></a>
+        <nav class="header-page-nav">
+            <ul class="desktop-display">
+                {% block links %}
+                    <li><a href="{{ path('home.index') }}" {% if active is defined and active == 'home' %}class="active"{% endif %}>Accueil</a></li>
+                    <li><a href="{{ path('ad.index') }}" {% if active is defined and active == 'ad' %}class="active"{% endif %}>Nos annonces</a></li>
+                    <li><a href="{{ path('article.index') }}" {% if active is defined and active == 'article' %}class="active"{% endif %}>Nos articles</a></li>
+                    <li {% if active is defined and active == 'contact' %}class="active"{% endif %}><a href="{{ path('contact.index') }}" class="primary">Prendre RDV</a></li>
+                {% endblock %}
+            </ul>
+            <span class="menu-icon mobile-display" id="hamburger"></span>
+            <span id="close-menu" class="mobile-display"></span>
+        </nav>
+    </header>
+
+    <div id="navigation-menu" class="mobile-display">
+        <div class="font-cover"></div>
+        <menu>
+           {{ block('links') }}
+        </menu>
+    </div>

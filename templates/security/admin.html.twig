@@ -9,8 +9,14 @@
 {% block body %}
     {% include 'header.html.twig' %}
     <div class="wrapper">
-        <div class="views-title">
-            <i class="admin-icon"></i><p> Nombre de vues des annonces</p>
+        <div class="admin-title">
+            <i class="user-icon"></i><p> Total des visiteurs</p>
+        </div>
+        <div class="admin-content">
+            <div class="total-views"><span>{{ views|length|number_format(0, '', '.') }}</span></div>
+        </div>
+        <div class="admin-title">
+            <i class="eye-icon"></i><p> Nombre de vues des annonces</p>
         </div>
         <table class="views-panel">
             <tr>

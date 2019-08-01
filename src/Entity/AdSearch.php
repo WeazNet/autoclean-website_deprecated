@@ -43,7 +43,6 @@ class AdSearch
         return $brands;
     }
 
-
     /**
      * @return  string
      */ 

@@ -5,6 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Repository\AdRepository;
+use App\Repository\ViewerRepository;
 
 class SecurityController extends AbstractController
 {
@@ -25,11 +26,14 @@ class SecurityController extends AbstractController
     /**
      * @Route("/admin", name="admin")
      */
-    public function admin(AdRepository $repository)
+    public function admin(AdRepository $repository, ViewerRepository $viewRepository)
     {
         $ads = $repository->findAll();
+        $views = $viewRepository->findAll();
+
         return $this->render('security/admin.html.twig', [
-            'ads' => $ads
+            'ads' => $ads,
+            'views' => $views
         ]);
     }
 }

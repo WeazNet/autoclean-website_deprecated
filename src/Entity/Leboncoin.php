@@ -69,7 +69,7 @@ class Leboncoin
         return [$adsUpdated, $adsRemoved];
     }
 
-    public function getArticles(ArticleRepository $repository, ViewerRepository $viewerRepository, int $articlesUpdated = 0): array
+    public function getArticles(ArticleRepository $repository, int $articlesUpdated = 0): array
     {
         $articles = $this->getParams(31);
         $articlesJob = $this->getParams(71);
@@ -88,7 +88,7 @@ class Leboncoin
         }
         $this->em->flush();
 
-        $articlesRemoved = $this->removeAds($repository);
+        $articlesRemoved = $this->removeAds($repository, 'articles');
 
         return [$articlesUpdated, $articlesRemoved];
     }
@@ -124,7 +124,7 @@ class Leboncoin
         return $attributes;
     }
 
-    private function removeAds($repository, int $adsRemoved = 0)
+    private function removeAds($repository, string $category = '', int $adsRemoved = 0)
     {  
         $ads = $repository->findAllByInterval();
         if($ads == 0){
@@ -132,8 +132,10 @@ class Leboncoin
         }
         foreach ($ads as $ad) {
             $this->em->remove($ad);
+            if($category !== 'articles'){
             $ad->removeViewers($ad->getViewerId());
             $this->em->persist($ad);
+            }
             $adsRemoved++;
         }
         $this->em->flush();
